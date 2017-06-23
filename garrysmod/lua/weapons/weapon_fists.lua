@@ -164,7 +164,7 @@ end
 
 function SWEP:Deploy()
 
-	local speed = GetConVarNumber( "sv_defaultdeployspeed" )
+	local speed = ConVar:GetInt( "sv_defaultdeployspeed" )
 
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_draw" ) )

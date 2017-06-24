@@ -164,7 +164,8 @@ end
 
 function SWEP:Deploy()
 
-	local speed = GetConVarNumber( "sv_defaultdeployspeed" )
+	local speedG = GetConVar("sv_defaultdeployspeed")
+	local speed = speedG:GetInt()
 
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_draw" ) )
@@ -185,10 +186,10 @@ end
 function SWEP:Think()
 
 	local vm = self.Owner:GetViewModel()
-	local curtime = CurTime()
 	local idletime = self:GetNextIdle()
+	local curtime = CurTime()
 
-	if ( idletime > 0 && CurTime() > idletime ) then
+	if ( idletime > 0 && curtime > idletime ) then
 
 		vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_idle_0" .. math.random( 1, 2 ) ) )
 
@@ -198,7 +199,7 @@ function SWEP:Think()
 
 	local meleetime = self:GetNextMeleeAttack()
 
-	if ( meleetime > 0 && CurTime() > meleetime ) then
+	if ( meleetime > 0 && curtime > meleetime ) then
 
 		self:DealDamage()
 
@@ -206,7 +207,7 @@ function SWEP:Think()
 
 	end
 
-	if ( SERVER && CurTime() > self:GetNextPrimaryFire() + 0.1 ) then
+	if ( SERVER && curtime > self:GetNextPrimaryFire() + 0.1 ) then
 
 		self:SetCombo( 0 )
 
